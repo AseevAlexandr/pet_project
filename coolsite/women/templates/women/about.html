@@ -5,7 +5,7 @@
     {% for p in posts %}
         <li><h2>{{p.title}}</h2>
     {% autoescape off %}
-    <p>{{p.content | linebreaks | truncatewords: 50}}</p>
+    <p>{{p.content|linebreaks}}</p>
     {% endautoescape %}
 
         <div class="clear"></div>
@@ -16,5 +16,3 @@
 {% endblock %}
 
 
-<!--<h1>{{title}}</h1>-->
-<!--<p>Содержимое страницы о сайте-->
