@@ -31,13 +31,13 @@ class WomenHome(DataMixin, ListView):
         return Women.objects.filter(is_published = True)
 
 
-def about(requests):
+def about(request):
     contact_list = Women.objects.all()
     paginator = Paginator(contact_list,3)
 
-    page_number = requests.GET.get('page')
+    page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    return render(requests, 'women/about.html', {'page_obj': page_obj, 'menu': menu, 'title': 'О сайте'})
+    return render(request, 'women/about.html', {'page_obj': page_obj, 'menu': menu, 'title': 'О сайте'})
 
 
 class AddPage(LoginRequiredMixin, DataMixin, CreateView):
@@ -111,7 +111,7 @@ class RegisterUser(DataMixin, CreateView):
 
     def form_valid(self, form):
         user = form.save()
-        login(self.requests, user)
+        login(self.request, user)
         return redirect('home')
 
 
@@ -119,17 +119,15 @@ class LoginUser(DataMixin, LoginView):
     form_class = LoginUserForm
     template_name = 'women/login.html'
 
-
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='Авторизация')
         return dict(list(context.items()) + list(c_def.items()))
 
-
     def get_success_url(self):
         return reverse_lazy('home')
 
 
-def LogoutUser(requests):
-    logout(requests)
+def logout_user(request):
+    logout(request)
     return redirect('login')
