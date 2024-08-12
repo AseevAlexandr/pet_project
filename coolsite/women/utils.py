@@ -10,6 +10,7 @@ menu = [
 
 
 class DataMixin:
+    # кратно 5
     paginate_by = 3
 
     def get_user_context(self, **kwargs):

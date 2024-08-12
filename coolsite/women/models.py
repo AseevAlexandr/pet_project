@@ -6,15 +6,14 @@ class Women(models.Model):
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
     content = models.TextField(blank= True, verbose_name= 'Текст статьи')
     photo = models.ImageField(blank=True, upload_to="photos/%Y/%m/%d", verbose_name= 'Фото')
-    time_create = models.DateTimeField(auto_now_add=True, verbose_name= "Дата создания")
-    time_update = models.DateTimeField(auto_now=True, verbose_name= 'Дата изменения')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name= "Дата создания")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name= 'Дата изменения')
     is_published = models.BooleanField(default=True, verbose_name= 'Публикация')
-    cat = models.ForeignKey('Category', on_delete=models.PROTECT, verbose_name='Категории')
+    category = models.ForeignKey('Category', on_delete=models.PROTECT, verbose_name='Категории')
 
 
     def __str__(self):
         return self.title
-
 
     def get_absolute_url(self):
         return reverse('post', kwargs={'post_slug': self.slug})
@@ -36,10 +35,8 @@ class Category(models.Model):
         verbose_name_plural = 'Категории'
         ordering = ['id']
 
-
     def __str__(self):
         return self.name
-
 
     def get_absolute_url(self):
         return reverse('category', kwargs={'cat_slug': self.slug})

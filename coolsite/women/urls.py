@@ -10,7 +10,7 @@ from .views import *
 
 urlpatterns = [
     path('', WomenHome.as_view(), name= 'home'),
-    path('about/', about, name= 'about'),
+    path('about/', about, name= 'about'), # почему тут есть слеш, а в остальных нет?
     path('addpage', AddPage.as_view(), name='addpage'),
     path('contact', ContactFormView.as_view(), name='contact'),
     path('login', LoginUser.as_view(), name='login'),

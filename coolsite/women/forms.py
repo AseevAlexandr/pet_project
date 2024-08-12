@@ -23,6 +23,8 @@ class AddPostForm(forms.ModelForm):
 
     def clean_title(self):
         title = self.cleaned_data['title']
+        # почему тут проверка на 200 символов, а в модели написано 255
+        # это проверка лишняя, тк validation error будет и там при сохранении в БД
         if len(title) > 200:
             raise ValidationError('Длинна превышает 200 символов')
 

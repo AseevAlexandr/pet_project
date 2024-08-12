@@ -28,12 +28,12 @@ class WomenHome(DataMixin, ListView):
 
 
     def get_queryset(self):
-        return Women.objects.filter(is_published = True)
+        return Women.objects.filter(is_published=True)
 
 
 def about(request):
     contact_list = Women.objects.all()
-    paginator = Paginator(contact_list,3)
+    paginator = Paginator(contact_list,3) # обычно пагинация кратно 5 делается
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -69,10 +69,10 @@ class ContactFormView(DataMixin, FormView):
 
 
     def form_valid(self, form):
-        print(form.cleaned_data)
+        print(form.cleaned_data) # принт лишний
         return redirect('home')
 
-
+# вынес этот методу куда-то бы в отделньый файл. utils.py к примеру
 def pageNotFound(requests, exception):
     return HttpResponseNotFound("<h1>Страница не найдена</h1>")
 
@@ -98,7 +98,7 @@ class WomenCategory(DataMixin, ListView):
 
 
     def get_queryset(self):
-        return Women.objects.filter(cat__slug=self.kwargs['cat_slug'], is_published= True)
+        return Women.objects.filter(cat__slug=self.kwargs['cat_slug'], is_published=True)
 
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -119,7 +119,7 @@ class RegisterUser(DataMixin, CreateView):
         c_def = self.get_user_context(title='Регистрация')
         return dict(list(context.items()) + list(c_def.items()))
 
-
+    # почему логирование в методе валидации?
     def form_valid(self, form):
         user = form.save()
         login(self.request, user)
